@@ -42,14 +42,6 @@ class Platform {
       'db_password' => $relationships["database"][0]["password"],
     ];
 
-    // tmp testng local
-    $config = [
-      'db_host' => '127.0.0.1',
-      'db_name' => 'root',
-      'db_user' => 'root',
-      'db_password' => 'printerpro_magento',
-    ];
-
     $config['admin_url'] = getenv('ADMIN_URL') ?: 'admin';
 
     if (isset($relationships['redis'][0]['host'])) {
