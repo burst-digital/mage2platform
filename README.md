@@ -33,7 +33,7 @@ _Note: if the `build flavor` is not set to `composer`, you should add `composer 
 The `--locale` part of the build hook is optional and depends on your project configuration.
 
 ### Roadmap
-
 1. Implement multidomain/multistore support
 2. Solr support
 3. Install script
+4. First time deploy has issue with autoloader depending on `app/etc/NonComposerComponentRegistration.php`

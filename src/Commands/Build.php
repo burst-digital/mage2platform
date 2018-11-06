@@ -58,7 +58,7 @@ class Build extends Command
     $this->exec->run('cd app; cp -Rp etc _etc');
 
     $this->exec->run('bin/magento setup:di:compile');
-    $this->exec->run('bin/magento setup:static-content:deploy -f --strategy=compact --exclude-theme=Magento/blank ' . $locale);
+    $this->exec->run('bin/magento setup:static-content:deploy -f ' . $locale);
 
     // Mounted directories are not kept from the build, so copy them to a tmp folder
     $this->exec->run('cd pub; rm -rf _static');
