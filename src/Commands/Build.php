@@ -23,8 +23,6 @@ class Build extends Command
 
   protected function configure() {
 
-//    die('configure');
-
     $this
       ->setName('build')
       ->setDescription('Build Magento 2')

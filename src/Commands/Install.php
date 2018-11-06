@@ -22,9 +22,6 @@ class Install extends Command
   protected $output;
 
   protected function configure() {
-
-    //    die('configure');
-
     $this
       ->setName('install')
       ->setDescription('Install Magento 2');

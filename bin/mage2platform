@@ -2,29 +2,29 @@
 <?php
 
 if (PHP_SAPI !== 'cli') {
-    echo 'mage2platform must be run as a CLI application';
-    exit(1);
+  echo 'mage2platform must be run as a CLI application';
+  exit(1);
 }
 
 try {
-  require_once __DIR__.'/../vendor/autoload.php';
+  require_once __DIR__ . '/../vendor/autoload.php';
 } catch (\Exception $e) {
-    echo 'Autoload error: ' . $e->getMessage();
-    exit(1);
+  echo 'Autoload error: ' . $e->getMessage();
+  exit(1);
 }
 
 try {
-    $application = new \Symfony\Component\Console\Application();
-    $application->add(new \Burst\Mage2Platform\Commands\Build());
-    $application->add(new \Burst\Mage2Platform\Commands\Install());
-    $application->add(new \Burst\Mage2Platform\Commands\Deploy());
-    $application->run();
+  $application = new \Symfony\Component\Console\Application();
+  $application->add(new \Burst\Mage2Platform\Commands\Build());
+  $application->add(new \Burst\Mage2Platform\Commands\Install());
+  $application->add(new \Burst\Mage2Platform\Commands\Deploy());
+  $application->run();
 } catch (\Exception $e) {
-    while ($e) {
-        echo $e->getMessage();
-        echo $e->getTraceAsString();
-        echo "\n\n";
-        $e = $e->getPrevious();
-    }
-    exit(1);
+  while ($e) {
+    echo $e->getMessage();
+    echo $e->getTraceAsString();
+    echo "\n\n";
+    $e = $e->getPrevious();
+  }
+  exit(1);
 }
