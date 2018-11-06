@@ -1,0 +1,24 @@
+{
+    "name": "burst/mage2platform",
+    "description": "CI/CD tools for Magento 2 and Platform.sh integration",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "R. Stoopman"
+        }
+    ],
+    "require": {
+        "php": ">=7.1.0",
+        "ext-json": "*",
+        "symfony/console": "~2.3",
+        "symfony/process": "~2.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Burst\\Mage2Platform\\": "src"
+        }
+    },
+    "bin": [
+        "bin/mage2platform"
+    ]
+}
