@@ -147,7 +147,15 @@ class Deploy extends Command
    */
   protected function copyWriteDirs() {
     $this->output->writeln('Reset read/write directories back.');
-    $this->exec->run('cd app; rm -rf etc/*; cp -Rp _etc/* etc');
+    $this->exec->run('cd app; rm -rf etc/*');
+    $this->exec->run('cd app; cp -Rp _etc/* etc');
+
+    $this->exec->run('cd pub; rm -rf static/*');
+    $this->exec->run('cd pub; cp -Rp _static/* static');
+
+    $this->exec->run('rm -rf generated/*');
+    $this->exec->run('cp -Rp _generated/* generated');
+
     $this->exec->run('mkdir -p var/session');
   }
 

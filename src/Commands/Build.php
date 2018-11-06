@@ -61,9 +61,10 @@ class Build extends Command
     $this->exec->run('bin/magento setup:static-content:deploy -f --strategy=compact --exclude-theme=Magento/blank ' . $locale);
 
     // Mounted directories are not kept from the build, so copy them to a tmp folder
-//    $this->exec->run('cd pub; rm -rf _static');
-//    $this->exec->run('cd pub; cp -Rp static _static');
-//    $this->exec->run('rm -rf _generated');
-//    $this->exec->run('cp -Rp generated _generated');
+    $this->exec->run('cd pub; rm -rf _static');
+    $this->exec->run('cd pub; cp -Rp static _static');
+
+    $this->exec->run('rm -rf _generated');
+    $this->exec->run('cp -Rp generated _generated');
   }
 }
