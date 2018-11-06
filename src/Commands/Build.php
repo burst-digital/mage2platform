@@ -62,9 +62,9 @@ class Build extends Command
 
     // Mounted directories are not kept from the build, so copy them to a tmp folder
     $this->exec->run('cd pub; rm -rf _static');
-    $this->exec->run('cd pub; cp -Rp static _static');
+    $this->exec->run('cd pub; shopt -s dotglob; cp -Rp static _static');
 
     $this->exec->run('rm -rf _generated');
-    $this->exec->run('cp -Rp generated _generated');
+    $this->exec->run('shopt -s dotglob; cp -Rp generated _generated');
   }
 }
