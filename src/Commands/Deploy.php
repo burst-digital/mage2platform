@@ -56,6 +56,15 @@ class Deploy extends Command
   }
 
   /**
+   * Is Static Content Deploy On Demand enabled?
+   * @return bool
+   */
+  public static function isStaticContentDeployOnDemand() {
+    $config = self::getPlatformEnvConfig();
+    return isset($config['static_content_on_demand_in_production']) && (bool) $config['static_content_on_demand_in_production'];
+  }
+
+  /**
    * Get the default domain from the Platform config.
    *
    * @return string
@@ -84,18 +93,25 @@ class Deploy extends Command
   }
 
   /**
+   * Get the Platform config env file
+   * @return array
+   * @throws \RuntimeException
+   */
+  public static function getPlatformEnvConfig() {
+    $file = 'app/etc/env.platform.php';
+    if (!is_file($file)) {
+      throw new \RuntimeException('app/etc/env.platform.php not found');
+    }
+    return include $file;
+  }
+
+  /**
    * Write the .env file with all platform relationship variables
    */
   protected function writeEnvFile() {
     $this->output->writeln('Writing env.php configuration.');
     $configFileName = 'app/etc/env.php';
-    if (is_file('app/etc/env.platform.php')) {
-      $config = include 'app/etc/env.platform.php';
-    }
-    else {
-      throw new \RuntimeException('app/etc/env.platform.php not found');
-    }
-
+    $config = self::getPlatformEnvConfig();
     $platformConfig = $this->platform->getRelationsAsConfig();
 
     $config['db']['connection']['default']['username'] = $platformConfig['db_user'];
@@ -151,10 +167,14 @@ class Deploy extends Command
     $this->exec->run('cd app; shopt -s dotglob; cp -Rp _etc/* etc');
 
     $this->exec->run('cd pub; rm -rf static/*');
-    $this->exec->run('cd pub; shopt -s dotglob; cp -Rp _static/* static');
+    if (!self::isStaticContentDeployOnDemand()) {
+      $this->exec->run('cd pub; shopt -s dotglob; cp -Rp _static/* static');
+    }
 
     $this->exec->run('rm -rf generated/*');
-    $this->exec->run('shopt -s dotglob; cp -Rp _generated/* generated');
+    if (!self::isStaticContentDeployOnDemand()) {
+      $this->exec->run('shopt -s dotglob; cp -Rp _generated/* generated');
+    }
 
     $this->exec->run('mkdir -p var/session');
   }
